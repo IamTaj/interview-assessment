@@ -17,7 +17,7 @@ import AppsIcon from "@mui/icons-material/Apps";
 const Header = () => {
   return (
     <AppBar
-      position="static"
+      position="sticky"
       sx={{
         bgcolor: "white",
         color: "black",
