@@ -438,61 +438,81 @@ const AppealPanel = () => {
               </TableHead>
 
               <TableBody>
-                {paginatedData.map((row: any, idx: number) => {
-                  const realIndex = page * rowsPerPage + idx;
+                {paginatedData.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={11} align="center">
+                      <Box py={4}>
+                        <strong>No appeal letters found.</strong>
+                        <Box mt={1}>
+                          Please add a new appeal letter to get started.
+                        </Box>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  paginatedData.map((row: any, idx: number) => {
+                    const realIndex = page * rowsPerPage + idx;
 
-                  return (
-                    <TableRow key={realIndex} hover>
-                      <TableCell padding="checkbox">
-                        <Checkbox
-                          checked={selected.includes(realIndex)}
-                          onChange={() => handleSelectOne(realIndex)}
-                        />
-                      </TableCell>
-                      <TableCell>{row.taxYear}</TableCell>
-                      <TableCell>{row.company}</TableCell>
-                      <TableCell>{row.state}</TableCell>
-                      <TableCell>{row.assessor}</TableCell>
-                      <TableCell>{row.accountNumber}</TableCell>
-                      <TableCell>{row.appealedDeadline}</TableCell>
-                      <TableCell
-                        sx={{ color: row.status === "Sent" ? "green" : "red" }}
-                      >
-                        {row.status}
-                      </TableCell>
-                      <TableCell>{row.appealedDate}</TableCell>
-                      <TableCell>{row.appealedBy}</TableCell>
-                      <TableCell>
-                        <IconButton
-                          onClick={(e: any) => {
-                            setRowMenuAnchorEl(e.currentTarget);
-                            setSelectedRow(row);
-                            dispatch(
-                              setModalStore({
-                                data: { formData: row, callBack: setOpenModal },
-                              })
-                            );
+                    return (
+                      <TableRow key={realIndex} hover>
+                        <TableCell padding="checkbox">
+                          <Checkbox
+                            checked={selected.includes(realIndex)}
+                            onChange={() => handleSelectOne(realIndex)}
+                          />
+                        </TableCell>
+                        <TableCell>{row.taxYear}</TableCell>
+                        <TableCell>{row.company}</TableCell>
+                        <TableCell>{row.state}</TableCell>
+                        <TableCell>{row.assessor}</TableCell>
+                        <TableCell>{row.accountNumber}</TableCell>
+                        <TableCell>{row.appealedDeadline}</TableCell>
+                        <TableCell
+                          sx={{
+                            color: row.status === "Sent" ? "green" : "red",
                           }}
                         >
-                          <MoreVertIcon />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
+                          {row.status}
+                        </TableCell>
+                        <TableCell>{row.appealedDate}</TableCell>
+                        <TableCell>{row.appealedBy}</TableCell>
+                        <TableCell>
+                          <IconButton
+                            onClick={(e: any) => {
+                              setRowMenuAnchorEl(e.currentTarget);
+                              setSelectedRow(row);
+                              dispatch(
+                                setModalStore({
+                                  data: {
+                                    formData: row,
+                                    callBack: setOpenModal,
+                                  },
+                                })
+                              );
+                            }}
+                          >
+                            <MoreVertIcon />
+                          </IconButton>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
               </TableBody>
             </Table>
           </TableContainer>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
-            component="div"
-            count={filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={(_event, newPage) => handleChangePage(newPage)}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
+          {paginatedData.length !== 0 && (
+            <TablePagination
+              rowsPerPageOptions={[5, 10, 25]}
+              component="div"
+              count={filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={(_event, newPage) => handleChangePage(newPage)}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          )}
         </Paper>
       </TabPanel>
 
