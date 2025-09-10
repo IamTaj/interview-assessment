@@ -69,12 +69,14 @@ const DashboardTabs = () => {
           transition: "width 0.3s",
           overflow: "visible",
           p: 1,
-          mt: 2,
+          mt: 8,
           height: "calc(100vh - 100px)",
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          position: "relative",
+          position: "fixed",
+          top: 0,
+          left: 0
         },
       }}
     >
