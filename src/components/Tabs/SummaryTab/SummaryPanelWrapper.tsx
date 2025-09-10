@@ -18,7 +18,7 @@ const SummaryPanelWrapper = () => {
 
   return (
     <div>
-      <EventSchedulerHeader />modalStore
+      <EventSchedulerHeader />
       <CalendarComponent />
 
       {modalStore?.isOpen && (
